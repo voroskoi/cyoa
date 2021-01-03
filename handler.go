@@ -1,6 +1,7 @@
 package cyoa
 
 import (
+	"log"
 	"net/http"
 	"strings"
 	"text/template"
@@ -20,9 +21,8 @@ func (sh storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		chapter = sh.story["intro"]
 	}
 	tmp := template.Must(template.ParseFiles("../../template/template.html"))
-	tmp.Execute(w, chapter)
-}
-
-func (sh *StoryHandler) SetStory(story Story) {
-	sh.story = story
+	err := tmp.Execute(w, chapter)
+	if err != nil {
+		log.Printf("unable to execute the template: %s", err)
+	}
 }
