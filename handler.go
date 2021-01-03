@@ -24,5 +24,6 @@ func (sh storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err := tmp.Execute(w, chapter)
 	if err != nil {
 		log.Printf("unable to execute the template: %s", err)
+		http.Error(w, "unable to execute template", http.StatusInternalServerError)
 	}
 }
