@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-type CyoaStory map[string]Chapter
+type Story map[string]Chapter
 
 type Chapter struct {
 	Title   string   `json:"title"`
@@ -17,13 +17,13 @@ type Chapter struct {
 	} `json:"options"`
 }
 
-func ParseJSON(storyfile string) CyoaStory {
+func ParseJSON(storyfile string) Story {
 	storyfd, err := os.Open(storyfile)
 	if err != nil {
 		log.Panicf("unable to open story file %q", storyfile)
 	}
 	decoder := json.NewDecoder(storyfd)
-	var story CyoaStory
+	var story Story
 	err = decoder.Decode(&story)
 	if err != nil {
 		log.Panicf("unable to decode: %s", err)

@@ -2,7 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
+	"net/http"
 
 	"github.com/voroskoi/cyoa/cyoa"
 )
@@ -12,5 +13,12 @@ func main() {
 	flag.Parse()
 
 	ps := cyoa.ParseJSON(*story)
-	fmt.Printf("%+v", ps)
+
+	var cyoahandler = cyoa.StoryHandler{}
+	cyoahandler.SetStory(ps)
+
+	err := http.ListenAndServe(":8080", cyoahandler)
+	if err != nil {
+		log.Fatalf("server stopped inexpectedly: %s", err)
+	}
 }
