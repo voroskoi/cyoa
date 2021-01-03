@@ -11,6 +11,6 @@ func main() {
 	story := flag.String("story", "../../gopher.json", "JSON file that contains the story")
 	flag.Parse()
 
-	cyoa.ParseJSON(*story)
-	fmt.Printf("%+v", cyoa.ParsedStory)
+	ps := cyoa.ParseJSON(*story)
+	fmt.Printf("%+v", ps)
 }

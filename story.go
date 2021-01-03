@@ -17,16 +17,16 @@ type Chapter struct {
 	} `json:"options"`
 }
 
-var ParsedStory CyoaStory
-
-func ParseJSON(storyfile string) {
+func ParseJSON(storyfile string) CyoaStory {
 	storyfd, err := os.Open(storyfile)
 	if err != nil {
 		log.Panicf("unable to open story file %q", storyfile)
 	}
 	decoder := json.NewDecoder(storyfd)
-	err = decoder.Decode(&ParsedStory)
+	var story CyoaStory
+	err = decoder.Decode(&story)
 	if err != nil {
 		log.Panicf("unable to decode: %s", err)
 	}
+	return story
 }
