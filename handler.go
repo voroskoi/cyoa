@@ -6,11 +6,15 @@ import (
 	"text/template"
 )
 
-type StoryHandler struct {
+type storyHandler struct {
 	story Story
 }
 
-func (sh StoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func NewHandler(st Story) http.Handler {
+	return storyHandler{st}
+}
+
+func (sh storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	chapter, exist := sh.story[strings.Trim(r.URL.Path, "/")]
 	if !exist {
 		chapter = sh.story["intro"]

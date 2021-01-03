@@ -14,8 +14,7 @@ func main() {
 
 	ps := cyoa.ParseJSON(*story)
 
-	var cyoahandler = cyoa.StoryHandler{}
-	cyoahandler.SetStory(ps)
+	cyoahandler := cyoa.NewHandler(ps)
 
 	err := http.ListenAndServe(":8080", cyoahandler)
 	if err != nil {
