@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<style>
+			body{
+				align-content: center;
+				margin: auto;
+				width: 36em;
+				max-width: 100%;
+			}
+			p {
+				text-align: justify;
+			}
+		</style>
+		<title>CYOA - {{.Title}}</title>
+	</head>
+	<body>
+	<div class="content">
+		{{ range .Story}}
+			<p>{{.}}</p>
+		{{end}}
+		
+		<p>
+		{{range .Options}}
+		
+			<div><a href="{{.Arc}}">{{ .Text }}</a></div>
+		{{else}}
+			<div><strong>THE END.</strong></div>
+		{{end}}
+		</p>
+	</div>
+	</body>
+</html>

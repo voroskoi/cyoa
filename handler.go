@@ -1,9 +1,9 @@
 package cyoa
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
+	"text/template"
 )
 
 type StoryHandler struct {
@@ -11,11 +11,10 @@ type StoryHandler struct {
 }
 
 func (sh StoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "URL is: %s\n", r.URL.EscapedPath())
 	if chapter, exist := sh.story[strings.Trim(r.URL.Path, "/")]; exist {
-		fmt.Fprintln(w, chapter.Story)
+		tmp := template.Must(template.ParseFiles("../../template/template.html"))
+		tmp.Execute(w, chapter)
 	}
-	fmt.Fprintf(w, "\n\n\n%+v", sh.story)
 }
 
 func (sh *StoryHandler) SetStory(story Story) {
