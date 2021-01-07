@@ -1,6 +1,7 @@
 package cyoa
 
 import (
+	"html"
 	"log"
 	"net/http"
 	"strings"
@@ -19,6 +20,9 @@ func (sh storyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	chapter, exist := sh.story[strings.Trim(r.URL.Path, "/")]
 	if !exist {
 		chapter = sh.story["intro"]
+	}
+	for i, p := range chapter.Story {
+		chapter.Story[i] = html.EscapeString(p)
 	}
 	tmp := template.Must(template.ParseFiles("../../template/template.html"))
 	err := tmp.Execute(w, chapter)
